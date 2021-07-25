@@ -4,6 +4,8 @@ import Header from './Header';
 import Container from './Container';
 import Searchbar from './Searchbar';
 import ImageGallery from './ImageGallery';
+import { ToastContainer } from 'react-toastify';
+import Loader from './Loader';
 // import fetchImages from 'services/imageAPI';
 const axios = require('axios').default;
 
@@ -16,6 +18,17 @@ class App extends Component {
     searchQuery: '',
     loading: false,
   };
+
+  componentDidUpdate(prevProps, prevState) {
+    const prevSearcQuery = prevState.searchQuery;
+    const newSearchQuery = this.state.searchQuery;
+
+    if (prevSearcQuery !== newSearchQuery) {
+      this.setState.loading = true;
+      // this.fetchImages();
+      this.setState.loading = false;
+    }
+  }
 
   handleFormSubmit = searchQuery => {
     this.setState({ searchQuery });
@@ -40,6 +53,7 @@ class App extends Component {
         <Header />
         <Searchbar SubmitProps={this.handleFormSubmit} />
         <Container></Container>
+        <ToastContainer />
       </>
     );
   }
