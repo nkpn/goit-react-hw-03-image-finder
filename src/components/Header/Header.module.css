@@ -1,0 +1,40 @@
+.PageHeader {
+  font-family: Rubik;
+  display: inline-block;
+  width: 100%;
+  font-size: 14px;
+  background-color: #ffff;
+}
+
+.MainNav {
+  display: flex;
+  justify-content: flex;
+  align-items: center;
+  padding: 15px;
+}
+
+.MainNavItem {
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.MainNavLastItem {
+  margin-left: 600px;
+}
+
+.MainNavLink {
+  color: #000;
+}
+
+.MainNavLink:hover {
+  color: #6d6b64;
+  transition-property: color;
+  transition-duration: 300ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.Container {
+  max-width: 1200px;
+  padding: 0 0;
+  margin: 0 auto;
+}
