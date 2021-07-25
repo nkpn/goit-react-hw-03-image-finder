@@ -1,30 +1,51 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import style from './Searchbar.module.css';
 
-const Searchbar = ({ SubmitFn }) => {
-  return (
-    <>
-      <section className={style.Searchbar}>
-        <form className={style.SearchForm}>
-          <input
-            className={style.SearchFormInput}
-            type="text"
-            autocomplete="off"
-            autofocus
-            placeholder="Поиск картинок"
-          />
-          <button
-            type="submit"
-            className={style.SearchFormButton}
-            onClick={SubmitFn}
-          >
-            Поиск
-          </button>
-        </form>
-      </section>
-    </>
-  );
+class Searchbar extends Component {
+  state = {
+    searchQuery: '',
+  };
+
+  handleSearchQueryChange = event => {
+    this.setState({ searchQuery: event.currentTarget.value.toLowerCase() });
+  };
+
+  handleSubmit = event => {
+    event.preventDefault();
+    this.props.SubmitProps(this.state.searchQuery);
+
+    this.setState({ searchQuery: '' });
+  };
+
+  render() {
+    const { handleSubmit, handleSearchQueryChange } = this;
+
+    return (
+      <>
+        <section className={style.Searchbar}>
+          <form className={style.SearchForm} onSubmit={handleSubmit}>
+            <input
+              className={style.SearchFormInput}
+              type="text"
+              autocomplete="off"
+              autofocus
+              placeholder="Поиск картинок"
+              value={this.state.searchQuery}
+              onChange={this.handleSearchQueryChange}
+            />
+            <button type="submit" className={style.SearchFormButton}>
+              Поиск
+            </button>
+          </form>
+        </section>
+      </>
+    );
+  }
+}
+
+Searchbar.propTypes = {
+  searchQuery: PropTypes.string.isRequired,
 };
 
 export default Searchbar;
