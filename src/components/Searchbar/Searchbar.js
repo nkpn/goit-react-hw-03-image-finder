@@ -26,7 +26,7 @@ class Searchbar extends Component {
   };
 
   render() {
-    const { handleSubmit, handleSearchQueryChange } = this;
+    const { handleSubmit } = this;
 
     return (
       <>
@@ -35,8 +35,8 @@ class Searchbar extends Component {
             <input
               className={style.SearchFormInput}
               type="text"
-              autocomplete="off"
-              autofocus
+              autoComplete="off"
+              autoFocus
               placeholder="Поиск картинок"
               value={this.state.searchQuery}
               onChange={this.handleSearchQueryChange}

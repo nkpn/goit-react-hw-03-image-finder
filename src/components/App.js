@@ -6,17 +6,16 @@ import Searchbar from './Searchbar';
 import ImageGallery from './ImageGallery';
 import { ToastContainer } from 'react-toastify';
 import Loader from './Loader';
-// import fetchImages from 'services/imageAPI';
+import fetchImages from 'services/imageAPI';
 const axios = require('axios').default;
 
 class App extends Component {
   state = {
-    API_KEY: '21962068-642cbe2e0c24045a0d25727d8',
-    BASE_URL: 'https://pixabay.com/api/',
     images: null,
-    page: null,
+    page: 1,
     searchQuery: '',
     loading: false,
+    status: 'idle',
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -24,28 +23,44 @@ class App extends Component {
     const newSearchQuery = this.state.searchQuery;
 
     if (prevSearcQuery !== newSearchQuery) {
-      this.setState.loading = true;
-      // this.fetchImages();
-      this.setState.loading = false;
+      this.fetch();
     }
   }
 
   handleFormSubmit = searchQuery => {
-    this.setState({ searchQuery });
+    this.setState({
+      searchQuery: searchQuery.trim(),
+      page: 1,
+      images: [],
+      status: null,
+    });
   };
 
-  componentDidMount() {
+  fetch = () => {
+    const { searchQuery, page } = this.state;
+
+    if (!searchQuery) {
+      return;
+    }
+
     this.setState({ loading: true });
 
-    // setTimeout(() => {
-    //   fetch(
-    //     `https://pixabay.com/api/'/?image_type=photo&orientation=horizontal&q=${this.searchQuery}&page=${this.page}&per_page=12&key=21962068-642cbe2e0c24045a0d25727d8`,
-    //   )
-    //     .then(res => res.json)
-    //     .then(images => this.setState({ images }))
-    //     .finally(() => this.setState({ loading: false }));
-    // }, 1000);
-  }
+    fetchImages({ searchQuery, page })
+      .then(hits => {
+        this.setState(prevState => ({
+          images: [...prevState.images, ...hits],
+          page: prevState.page + 1,
+        }));
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: 'smooth',
+        });
+      })
+      .catch(error => this.setState({ error }))
+      .finally(() => {
+        this.setState({ loading: false });
+      });
+  };
 
   render() {
     return (

@@ -5,9 +5,10 @@
   align-items: center;
   font-family: Rubik;
 
-  max-width: 1920px;
+  /* max-width: 1920px; */
   height: 500px;
   background-size: cover;
+  background-color: rgb(49, 184, 216);
   background-image: url(../../images/architecture-cut.jpg);
 }
 
