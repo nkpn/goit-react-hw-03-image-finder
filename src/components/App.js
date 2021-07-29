@@ -10,11 +10,12 @@ import { fetchImages } from '../services/imageAPI';
 
 class App extends Component {
   state = {
-    images: null,
+    images: [],
     page: 1,
     searchQuery: '',
     loading: false,
     status: 'idle',
+    showModal: false,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -25,6 +26,12 @@ class App extends Component {
       this.fetch();
     }
   }
+
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+    }));
+  };
 
   handleFormSubmit = searchQuery => {
     this.setState({
@@ -61,41 +68,15 @@ class App extends Component {
     }
   };
 
-  // fetch = () => {
-  //   const { searchQuery, page } = this.state;
-
-  //   if (!searchQuery) {
-  //     return;
-  //   }
-
-  //   this.setState({ loading: true });
-
-  //   fetchImages({ searchQuery, page })
-  //     .then(hits => {
-  //       this.setState(prevState => ({
-  //         images: [...prevState.images],
-  //         page: prevState.page + 1,
-  //       }));
-  //       window.scrollTo({
-  //         top: document.documentElement.scrollHeight,
-  //         behavior: 'smooth',
-  //       });
-  //     })
-  //     .catch(error => this.setState({ error }))
-  //     .finally(() => {
-  //       this.setState({ loading: false });
-  //     });
-  // };
-
   render() {
-    const { images } = this.setState;
+    const { images, errors } = this.state;
     const { handleFormSubmit } = this;
     return (
       <>
         <Header />
         <Searchbar SubmitProps={handleFormSubmit} />
         <Container>
-          <ImageGallery images={images} />
+          {errors ? <h2>{errors}</h2> : <ImageGallery images={images} />}
         </Container>
         <ToastContainer />
       </>
