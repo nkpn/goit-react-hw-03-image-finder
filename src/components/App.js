@@ -6,8 +6,7 @@ import Searchbar from './Searchbar';
 import ImageGallery from './ImageGallery';
 import { ToastContainer } from 'react-toastify';
 import Loader from './Loader';
-import fetchImages from 'services/imageAPI';
-const axios = require('axios').default;
+import { fetchImages } from '../services/imageAPI';
 
 class App extends Component {
   state = {
@@ -36,7 +35,7 @@ class App extends Component {
     });
   };
 
-  fetch = () => {
+  fetch = async () => {
     const { searchQuery, page } = this.state;
 
     if (!searchQuery) {
@@ -45,29 +44,59 @@ class App extends Component {
 
     this.setState({ loading: true });
 
-    fetchImages({ searchQuery, page })
-      .then(hits => {
-        this.setState(prevState => ({
-          images: [...prevState.images, ...hits],
-          page: prevState.page + 1,
-        }));
-        window.scrollTo({
-          top: document.documentElement.scrollHeight,
-          behavior: 'smooth',
-        });
-      })
-      .catch(error => this.setState({ error }))
-      .finally(() => {
-        this.setState({ loading: false });
+    try {
+      const images = await fetchImages({ searchQuery, page });
+      this.setState(prevState => ({
+        images: [...prevState.images, ...images.data.hits],
+        page: prevState.page + 1,
+        loading: false,
+      }));
+      console.log(images);
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: 'smooth',
       });
+    } catch (error) {
+      this.setState({ errors: this.setState({ error }), loading: false });
+    }
   };
 
+  // fetch = () => {
+  //   const { searchQuery, page } = this.state;
+
+  //   if (!searchQuery) {
+  //     return;
+  //   }
+
+  //   this.setState({ loading: true });
+
+  //   fetchImages({ searchQuery, page })
+  //     .then(hits => {
+  //       this.setState(prevState => ({
+  //         images: [...prevState.images],
+  //         page: prevState.page + 1,
+  //       }));
+  //       window.scrollTo({
+  //         top: document.documentElement.scrollHeight,
+  //         behavior: 'smooth',
+  //       });
+  //     })
+  //     .catch(error => this.setState({ error }))
+  //     .finally(() => {
+  //       this.setState({ loading: false });
+  //     });
+  // };
+
   render() {
+    const { images } = this.setState;
+    const { handleFormSubmit } = this;
     return (
       <>
         <Header />
-        <Searchbar SubmitProps={this.handleFormSubmit} />
-        <Container></Container>
+        <Searchbar SubmitProps={handleFormSubmit} />
+        <Container>
+          <ImageGallery images={images} />
+        </Container>
         <ToastContainer />
       </>
     );

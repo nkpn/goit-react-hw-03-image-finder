@@ -1,20 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import style from './ImageGallery.module.css';
-import ImageGalleryItem from 'components/ImageGalleryItem';
+import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
 
-const ImageGallery = ({ images, openModal }) => (
-  <ul className={style.ImageGallery} onClick={openModal}>
-    {images.map((image, index) => (
-      <ImageGalleryItem
-        largeURL={image.largeURL}
-        tags={image.tags}
-        key={index}
-        prevURL={image.prevURL}
-      />
-    ))}
-  </ul>
-);
+const ImageGallery = ({ images, openModal }) => {
+  return (
+    <ul className={style.ImageGallery}>
+      <ImageGalleryItem images={images} openModal={openModal} />
+    </ul>
+  );
+};
 
 ImageGallery.propTypes = {
   openModal: PropTypes.func.isRequired,

@@ -3,19 +3,27 @@ import PropTypes from 'prop-types';
 import style from './ImageGalleryItem.module.css';
 //* добавь дефолтного кота
 
-const imageGalleryItem = ({ largeURL, tags, prevURL }) => {
-  <li className={style.imageGalleryItem}>
-    <img
-      alt={tags}
-      data={largeURL}
-      className={style.ImageGalleryItemImage}
-      src={prevURL}
-    ></img>
-  </li>;
+const imageGalleryItem = ({ images, openModal }) => {
+  return (
+    <>
+      {images.map(image => {
+        return (
+          <li className={style.imageGalleryItem} key={image.id}>
+            <img
+              src={image.webformatURL}
+              alt={image.tags}
+              className={style.imageGalleryItemImage}
+              onClick={() => openModal(image.largeImageURL)}
+            />
+          </li>
+        );
+      })}
+    </>
+  );
 };
 
 imageGalleryItem.propTypes = {
-  image: PropTypes.array,
+  image: PropTypes.array.isRequired,
 };
 
 // ImageGalleryItem.defaultProps = {
