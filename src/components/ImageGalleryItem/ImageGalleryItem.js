@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import style from './ImageGalleryItem.module.css';
 //* добавь дефолтного кота
 
-const ImageGalleryItem = ({ images, openModal }) => {
+const ImageGalleryItem = ({ images, onImgClick }) => {
   return (
     <>
       {images.map(image => {
@@ -13,7 +13,7 @@ const ImageGalleryItem = ({ images, openModal }) => {
               src={image.webformatURL}
               alt={image.tags}
               className={style.ImageGalleryItemImage}
-              onClick={() => openModal(image.largeImageURL)}
+              onClick={() => onImgClick(image.largeImageURL)}
             />
           </li>
         );

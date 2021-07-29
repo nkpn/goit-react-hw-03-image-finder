@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import style from './ImageGallery.module.css';
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
 
-const ImageGallery = ({ images, openModal }) => {
+const ImageGallery = ({ images, onImgClick }) => {
   return (
     <ul className={style.ImageGallery}>
-      <ImageGalleryItem images={images} openModal={openModal} />
+      <ImageGalleryItem images={images} onImgClick={onImgClick} />
     </ul>
   );
 };

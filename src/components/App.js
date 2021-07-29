@@ -6,6 +6,7 @@ import Searchbar from './Searchbar';
 import ImageGallery from './ImageGallery';
 import { ToastContainer } from 'react-toastify';
 import Loader from './Loader';
+import Modal from './Modal/Modal';
 import { fetchImages } from '../services/imageAPI';
 
 class App extends Component {
@@ -16,6 +17,7 @@ class App extends Component {
     loading: false,
     status: 'idle',
     showModal: false,
+    modalImage: '',
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -26,12 +28,6 @@ class App extends Component {
       this.fetch();
     }
   }
-
-  toggleModal = () => {
-    this.setState(({ showModal }) => ({
-      showModal: !showModal,
-    }));
-  };
 
   handleFormSubmit = searchQuery => {
     this.setState({
@@ -68,15 +64,38 @@ class App extends Component {
     }
   };
 
+  toggleModal = () => {
+    this.setState({
+      showModal: false,
+      modalImage: '',
+    });
+  };
+
+  openModal = largeImageUrl => {
+    this.setState({
+      showModal: true,
+      modalImage: largeImageUrl,
+    });
+  };
+
   render() {
-    const { images, errors } = this.state;
-    const { handleFormSubmit } = this;
+    const { images, errors, modalImage, showModal } = this.state;
+    const { handleFormSubmit, toggleModal, openModal } = this;
     return (
       <>
         <Header />
         <Searchbar SubmitProps={handleFormSubmit} />
         <Container>
-          {errors ? <h2>{errors}</h2> : <ImageGallery images={images} />}
+          {errors ? (
+            <h2>{errors}</h2>
+          ) : (
+            <ImageGallery images={images} onImgClick={openModal} />
+          )}
+          {showModal && (
+            <Modal onClose={toggleModal}>
+              <img src={modalImage} alt="name" />
+            </Modal>
+          )}
         </Container>
         <ToastContainer />
       </>
