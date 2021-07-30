@@ -16,24 +16,16 @@ const Header = () => {
               height="35"
             ></MyIcon>
             <li className={style.MainNavItem}>
-              <a href="#" className={style.MainNavLink}>
-                Главная страница
-              </a>
+              <p className={style.MainNavText}>Главная страница</p>
             </li>
             <li className={style.MainNavItem}>
-              <a href="#" className={style.MainNavLink}>
-                Фото
-              </a>
+              <p className={style.MainNavText}>Фото</p>
             </li>
             <li className={style.MainNavItem}>
-              <a href="#" className={style.MainNavLink}>
-                О нас
-              </a>
+              <p className={style.MainNavText}>О нас</p>
             </li>
             <li className={style.MainNavLastItem}>
-              <a href="#" className={style.MainNavLink}>
-                Личный кабинет
-              </a>
+              <p className={style.MainNavText}>Личный кабинет</p>
             </li>
           </ul>
         </div>

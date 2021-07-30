@@ -22,12 +22,13 @@
   margin-left: 600px;
 }
 
-.MainNavLink {
+.MainNavText {
   color: #000;
 }
 
-.MainNavLink:hover {
+.MainNavText:hover {
   color: #6d6b64;
+  cursor: pointer;
   transition-property: color;
   transition-duration: 300ms;
   animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);

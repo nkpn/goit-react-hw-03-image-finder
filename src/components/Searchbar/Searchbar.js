@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import style from './Searchbar.module.css';
 import { notifyInfo, notifySuccess } from '../../services/Toast';
-import { ToastContainer } from 'react-toastify';
 
 class Searchbar extends Component {
   state = {
