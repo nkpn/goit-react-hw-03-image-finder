@@ -5,9 +5,10 @@ import Container from './Container';
 import Searchbar from './Searchbar';
 import ImageGallery from './ImageGallery';
 import { ToastContainer } from 'react-toastify';
-import Loader from './Loader';
 import Modal from './Modal/Modal';
 import { fetchImages } from '../services/imageAPI';
+import CustomLoader from './SpinnerLoader';
+import Button from './Button';
 
 class App extends Component {
   state = {
@@ -79,8 +80,8 @@ class App extends Component {
   };
 
   render() {
-    const { images, errors, modalImage, showModal } = this.state;
-    const { handleFormSubmit, toggleModal, openModal } = this;
+    const { images, errors, modalImage, showModal, loading } = this.state;
+    const { handleFormSubmit, toggleModal, openModal, fetch } = this;
     return (
       <>
         <Header />
@@ -91,6 +92,8 @@ class App extends Component {
           ) : (
             <ImageGallery images={images} onImgClick={openModal} />
           )}
+          {images.length > 0 && <Button onLoadClick={fetch} />}
+          {loading && <CustomLoader />}
           {showModal && (
             <Modal onClose={toggleModal}>
               <img src={modalImage} alt="name" />
